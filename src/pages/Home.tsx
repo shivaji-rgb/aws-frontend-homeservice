@@ -4,19 +4,20 @@ import ServiceReachCard from '../util/dashboard/ServiceReachCard'
 import StatCard, { type StatCardData } from '../util/dashboard/StatCard'
 import WeeklyDeliveryCard, { type DeliveryPoint } from '../util/dashboard/WeeklyDeliveryCard'
 import LoginLoader from '../loaders/LoginLoader';
+import RegisterLoader from '../loaders/RegisterLoader';
 import { useState } from 'react';
 
 
 const theme = createTheme({
-  palette: { primary: { main: '#075e68' }, secondary: { main: '#e97950' }, background: { default: '#f5f8f6', paper: '#ffffff' }, text: { primary: '#183238', secondary: '#63777b' } },
+  palette: { primary: { main: '#238dcc' }, secondary: { main: '#69c2eb' }, background: { default: '#eef8fd', paper: '#ffffff' }, text: { primary: '#12344a', secondary: '#5b7484' } },
   typography: { fontFamily: '"DM Sans", "Segoe UI", sans-serif', h1: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 }, h2: { fontFamily: '"Fraunces", Georgia, serif', fontWeight: 600 } },
   shape: { borderRadius: 14 },
 })
 
 const stats: StatCardData[] = [
-  { label: 'Customers reached', value: '1,284', change: '+12.8%', icon: <PeopleAlt />, color: '#075e68' },
-  { label: 'Litres delivered this week', value: '8,640 L', change: '+8.4%', icon: <WaterDrop />, color: '#2777a6' },
-  { label: 'Active delivery routes', value: '24', change: '+3 routes', icon: <LocalShipping />, color: '#c76542' },
+  { label: 'Customers reached', value: '1,284', change: '+12.8%', icon: <PeopleAlt />, color: '#238dcc' },
+  { label: 'Litres delivered this week', value: '8,640 L', change: '+8.4%', icon: <WaterDrop />, color: '#45acd9' },
+  { label: 'Active delivery routes', value: '24', change: '+3 routes', icon: <LocalShipping />, color: '#1674ad' },
 ]
 
 const weeklyDelivery: DeliveryPoint[] = [
@@ -27,6 +28,7 @@ const weeklyDelivery: DeliveryPoint[] = [
 function Home() {
 
   const[loginLoder, setLoginLoader] = useState(false);
+  const[registerLoader, setRegisterLoader] = useState(false);
 
   const handleLoginClick = () => {
     setLoginLoader(true);
@@ -34,6 +36,10 @@ function Home() {
 
   const handleCloseLogin = () => {
     setLoginLoader(false);
+  };
+
+  const handleCloseRegister = () => {
+    setRegisterLoader(false);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -45,9 +51,14 @@ function Home() {
               <Box className="brand-mark"><WaterDrop fontSize="small" /></Box>
               <Typography className="brand-name">AquaReach</Typography>
             </Stack>
-            <Button variant="contained" color="primary" startIcon={<PeopleAlt />} sx={{ borderRadius: 2, px: 2.5 }} onClick={handleLoginClick}>
-              Login
-            </Button>
+            <Stack direction="row" spacing={1}>
+              <Button variant="outlined" color="primary" sx={{ borderRadius: 2, px: 2 }} onClick={() => setRegisterLoader(true)}>
+                Register
+              </Button>
+              <Button variant="contained" color="primary" startIcon={<PeopleAlt />} sx={{ borderRadius: 2, px: 2.5 }} onClick={handleLoginClick}>
+                Login
+              </Button>
+            </Stack>
           </Box>
 
           <Box component="main" className="page-content">
@@ -79,6 +90,12 @@ function Home() {
 >
   <LoginLoader />
 </Dialog>
+         <Dialog
+           open={registerLoader}
+           onClose={handleCloseRegister}
+         >
+           <RegisterLoader onComplete={handleCloseRegister} />
+         </Dialog>
         </Container>
       </Box>
     </ThemeProvider>

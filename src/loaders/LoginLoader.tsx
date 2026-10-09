@@ -18,7 +18,8 @@ const LoginLoader = () => {
    loginMutation.mutate({
       username,
       password,
-    });
+    }
+  );
       
   };
 
@@ -77,4 +78,3 @@ const LoginLoader = () => {
 };
 
 export default LoginLoader;
-
